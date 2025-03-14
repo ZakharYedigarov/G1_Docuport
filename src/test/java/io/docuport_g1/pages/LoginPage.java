@@ -27,6 +27,15 @@ public class LoginPage {
     @FindBy(xpath = "//span[.=' Continue ']")
     public WebElement continueButton;
 
+    @FindBy(xpath = "//*[.=' Login ']")
+    public WebElement loginText;
+
+    @FindBy(xpath = "//img[@src='/img/logo.d7557277.svg']")
+    public WebElement docuportText;
+
+    @FindBy(xpath = "//h3[contains(text(),'Choose account')]")
+    public WebElement continueText;
+
     public void insertField(String field, String input){
         switch (field.toLowerCase().trim()){
             case "username":
@@ -35,7 +44,7 @@ public class LoginPage {
             case "password":
                 BrowserUtils.waitForVisibility(passwordInput, 10).sendKeys(input);
                 break;
-            default: throw new IllegalArgumentException("No such a field: " + field );
+            default: throw new IllegalArgumentException("No such field: " + field);
         }
     }
 
@@ -46,14 +55,13 @@ public class LoginPage {
                 break;
             case "continue":
                 try {
-                    BrowserUtils.waitForVisibility(continueButton, 10);
+                    BrowserUtils.waitForClickable(continueButton, 10).click();
                 } catch (Exception e) {
                     WebElement element = Driver.getDriver().findElement(By.xpath("//span[.=' Continue ']"));
                     element.click();
                 }
                 break;
-
-            default: throw new IllegalArgumentException("Not such a button: " + button);
+            default: throw new IllegalArgumentException("No such button: " + button);
         }
     }
 
@@ -61,7 +69,7 @@ public class LoginPage {
      *logins to docuport application
      * @param driver, which is initialized in the test base
      * @param role, comes from docuport constants
-     * author zck
+     * author nsh
      */
     public void login(WebDriver driver, String role) throws InterruptedException {
         switch (role.toLowerCase()){
