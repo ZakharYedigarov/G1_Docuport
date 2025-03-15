@@ -27,7 +27,7 @@ public class DocuportLeftNavigationValidation {
 
     @Given("User login as {string}")
     public void user_login_as(String role) throws InterruptedException {
-        Driver.getDriver().get(ConfigurationReader.getProperties("docuportBETA"));
+        Driver.getDriver().get(ConfigurationReader.getProperties("docuporLoginPageUrl"));
 
         switch (role) {
             case "Advisor":
