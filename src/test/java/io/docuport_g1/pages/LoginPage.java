@@ -1,13 +1,12 @@
 package io.docuport_g1.pages;
-
 import io.docuport_g1.utilities.BrowserUtils;
 import io.docuport_g1.utilities.DocuportConstants;
 import io.docuport_g1.utilities.Driver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 
 public class LoginPage {
 
@@ -24,85 +23,70 @@ public class LoginPage {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement loginButton;
 
-    @FindBy(xpath = "//span[.=' Continue ']")
+    @FindBy(xpath = "//button[@type='submit']")
     public WebElement continueButton;
-
-    public void insertField(String field, String input){
-        switch (field.toLowerCase().trim()){
-            case "username":
-                BrowserUtils.waitForVisibility(usernameInput, 10).sendKeys(input);
-                break;
-            case "password":
-                BrowserUtils.waitForVisibility(passwordInput, 10).sendKeys(input);
-                break;
-            default: throw new IllegalArgumentException("No such a field: " + field );
-        }
-    }
-
-    public void clickButton(String button){
-        switch (button.toLowerCase().trim()){
-            case "login":
-                BrowserUtils.waitForClickable(loginButton, 10).click();
-                break;
-            case "continue":
-                try {
-                    BrowserUtils.waitForVisibility(continueButton, 10);
-                } catch (Exception e) {
-                    WebElement element = Driver.getDriver().findElement(By.xpath("//span[.=' Continue ']"));
-                    element.click();
-                }
-                break;
-
-            default: throw new IllegalArgumentException("Not such a button: " + button);
-        }
-    }
 
     /**
      *logins to docuport application
      * @param driver, which is initialized in the test base
      * @param role, comes from docuport constants
-     * author zck
+     * author nsh
      */
-    public void login(WebDriver driver, String role) throws InterruptedException {
-        switch (role.toLowerCase()){
-            case "client":
-                usernameInput.sendKeys(DocuportConstants.USERNAME_CLIENT);
-                passwordInput.sendKeys(DocuportConstants.PASSWORD);
-                break;
-            case "supervisor":
-                usernameInput.sendKeys(DocuportConstants.USERNAME_SUPERVISOR);
-                passwordInput.sendKeys(DocuportConstants.PASSWORD);
-                break;
-            case "advisor":
-                usernameInput.sendKeys(DocuportConstants.USERNAME_ADVISOR);
-                passwordInput.sendKeys(DocuportConstants.PASSWORD);
-                break;
-            case "employee":
-                usernameInput.sendKeys(DocuportConstants.USERNAME_EMPLOYEE);
-                passwordInput.sendKeys(DocuportConstants.PASSWORD);
-                break;
-            default: throw new InterruptedException("There is not such a role: " + role);
-        }
 
-        loginButton.click();
 
-        if(role.toLowerCase().equals("client")){
-            Thread.sleep(3000);
-            WebElement cont = driver.findElement(By.xpath("//button[@type='submit']"));
-            cont.click();
-            Thread.sleep(3000);
-        }
+public void enterCredentials(String role) {
+    if (role == null || role.isEmpty()) {
+        throw new IllegalArgumentException("Role cannot be null or empty");
     }
-
-    public void login2(String username, String password){
-        BrowserUtils.waitForClickable(loginButton, 10);
-        usernameInput.clear();
-        usernameInput.sendKeys(username);
-        passwordInput.clear();
-        passwordInput.sendKeys(password);
-        if (BrowserUtils.waitForVisibility(continueButton, 10).isDisplayed()) {
+    String username;
+    switch (role.toLowerCase().trim()) {
+        case "client":
+            username = DocuportConstants.USERNAME_CLIENT;
+            break;
+        case "supervisor":
+            username = DocuportConstants.USERNAME_SUPERVISOR;
+            break;
+        case "advisor":
+            username = DocuportConstants.USERNAME_ADVISOR;
+            break;
+        case "employee":
+            username = DocuportConstants.USERNAME_EMPLOYEE;
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid role: " + role);
+    }
+    // Clear the field before entering credentials
+//        usernameInput.clear();
+//        passwordInput.clear();
+//        usernameInput.sendKeys(username);
+//        passwordInput.sendKeys(DocuportConstants.PASSWORD);
+}
+// Method for clicking button
+public void clickButton(String button) {
+    if (button == null || button.isEmpty()) {
+        throw new IllegalArgumentException("Button name cannot be null or empty");
+    }
+    switch (button.toLowerCase().trim()) {
+        case "login":
+            BrowserUtils.waitForClickable(loginButton, 5);
+            loginButton.click();
+            break;
+        case "continue":
+            BrowserUtils.waitForVisibility(continueButton, 5);
             continueButton.click();
-        }
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown button: " + button);
     }
-
+}
+// full login process
+public void login(String role) {
+    enterCredentials(role);
+    clickButton("login");
+    // If it is a client needs to click  "Continue"
+    if (role.equalsIgnoreCase("client")) {
+        BrowserUtils.waitForVisibility(continueButton, 5);
+        clickButton("continue");
+    }
+}
 }
