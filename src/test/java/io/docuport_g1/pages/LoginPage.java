@@ -27,14 +27,19 @@ public class LoginPage {
     @FindBy(xpath = "//span[.=' Continue ']")
     public WebElement continueButton;
 
-    @FindBy(xpath = "//*[.=' Login ']")
-    public WebElement loginText;
+    @FindBy(xpath = "//div[@role='listbox']//a[1]")
+    public WebElement homeIcon;
 
-    @FindBy(xpath = "//img[@src='/img/logo.d7557277.svg']")
-    public WebElement docuportText;
+    @FindBy(xpath = "//a[@href='/1099-form']")
+    public WebElement form1099;
 
-    @FindBy(xpath = "//h3[contains(text(),'Choose account')]")
-    public WebElement continueText;
+    @FindBy(xpath = "//div[@class='d-flex align-center']")
+    public WebElement bgDropdown;
+
+    @FindBy(xpath = "//span[contains(text(),'Log out')]")
+    public WebElement logOutButton;
+
+
 
     public void insertField(String field, String input){
         switch (field.toLowerCase().trim()){
@@ -44,7 +49,7 @@ public class LoginPage {
             case "password":
                 BrowserUtils.waitForVisibility(passwordInput, 10).sendKeys(input);
                 break;
-            default: throw new IllegalArgumentException("No such field: " + field);
+            default: throw new IllegalArgumentException("No such a field: " + field );
         }
     }
 
@@ -55,13 +60,14 @@ public class LoginPage {
                 break;
             case "continue":
                 try {
-                    BrowserUtils.waitForClickable(continueButton, 10).click();
+                    BrowserUtils.waitForVisibility(continueButton, 10);
                 } catch (Exception e) {
                     WebElement element = Driver.getDriver().findElement(By.xpath("//span[.=' Continue ']"));
                     element.click();
                 }
                 break;
-            default: throw new IllegalArgumentException("No such button: " + button);
+
+            default: throw new IllegalArgumentException("Not such a button: " + button);
         }
     }
 
@@ -69,7 +75,7 @@ public class LoginPage {
      *logins to docuport application
      * @param driver, which is initialized in the test base
      * @param role, comes from docuport constants
-     * author nsh
+     * author zck
      */
     public void login(WebDriver driver, String role) throws InterruptedException {
         switch (role.toLowerCase()){
@@ -103,12 +109,12 @@ public class LoginPage {
     }
 
     public void login2(String username, String password){
-        BrowserUtils.waitForClickable(loginButton, 10);
+        BrowserUtils.waitForClickable(loginButton, 2);
         usernameInput.clear();
         usernameInput.sendKeys(username);
         passwordInput.clear();
         passwordInput.sendKeys(password);
-        if (BrowserUtils.waitForVisibility(continueButton, 10).isDisplayed()) {
+        if (BrowserUtils.waitForVisibility(continueButton, 2).isDisplayed()) {
             continueButton.click();
         }
     }
