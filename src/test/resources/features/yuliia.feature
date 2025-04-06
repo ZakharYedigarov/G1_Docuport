@@ -25,5 +25,4 @@
 #    And log out as a new client
 #    And create Db connection
 #    Then delete newly created "client"
-#
-#
+
