@@ -65,7 +65,7 @@ public class DocuportStepDefs extends BasePage {
         DB_Utility.runQuery("SELECT COUNT(*) FROM identity.users");
         String dbUserCount = DB_Utility.getCellValue(1, 1);
         //System.out.println("dbUserCount = " + dbUserCount);
-
+        BrowserUtils.waitFor(3);
         Assert.assertEquals(dbUserCount, uiUserCount);
 
 
