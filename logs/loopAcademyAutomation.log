@@ -1,5 +1,7 @@
-06.04.2025 12:00:18 INFO  LoginStepDefs:105 - user enters password
-06.04.2025 12:00:18 INFO  LoginStepDefs:59 - user clicks login button
-06.04.2025 12:00:18 INFO  LoginStepDefs:112 - Home page is successfully displayed
-06.04.2025 12:00:19 INFO  NewClientCreation:37 - User is on Client Page
-06.04.2025 12:00:19 INFO  NewClientCreation:52 - Clicked Create New Client and Choose Personal
+06.04.2025 13:14:04 INFO  LoginStepDefs:35 - user is on docuport login page
+06.04.2025 13:14:04 INFO  LoginStepDefs:43 - User enters username for client
+06.04.2025 13:14:04 INFO  LoginStepDefs:49 - user enters password
+06.04.2025 13:14:04 INFO  LoginStepDefs:59 - user clicks login button
+06.04.2025 13:14:05 INFO  LoginStepDefs:65 - Home page is successfully displayed
+06.04.2025 13:14:05 INFO  LoginStepDefs:74 - Log out page is successfully displayed
+06.04.2025 13:14:05 INFO  Hook:49 - .......................END AUTOMATION........................Group_1

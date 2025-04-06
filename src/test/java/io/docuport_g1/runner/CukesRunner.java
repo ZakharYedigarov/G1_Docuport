@@ -8,16 +8,16 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {
                 "pretty",
-                "json:target/cucumber.json",         // ✅ This generates the JSON report
-                "html:target/cucumber-html-report",
+                "html:target/html-reports/cucumber-report.html",
+                "json:target/json-reports/json-report.json",
                 "rerun:target/rerun.txt",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         features = "src/test/resources/features",
         glue = "io.docuport_g1.step_definitions",
         monochrome = true,
-        dryRun = false,
-        tags = "@smoke"
+        dryRun = false
+        //tags = "@smoke"
 )
 
 public class CukesRunner {}
