@@ -8,8 +8,9 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {
                 "pretty",
-                "json:target/json-report",         // ✅ This generates the JSON report
-                "html:target/cucumber-html-report"   // Optional, generates HTML report
+                "json:target/cucumber.json",         // ✅ This generates the JSON report
+                "html:target/cucumber-html-report",
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         features = "src/test/resources/features",
         glue = "io.docuport_g1.step_definitions",
